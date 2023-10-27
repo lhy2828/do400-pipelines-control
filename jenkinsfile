@@ -1,13 +1,21 @@
-node('nodejs'){
-	stage('Checkout'){
-		git branch: 'main',
-			url:'https://github.com/lhy2828/do400-pipelines-control.git'
+pipeline{
+	agent{
+		node{
+			label 'nodejs'
+		}
 	}
-	stage('Backend test'){
-		sh 'node ./backend/test.js'
+	stages{
+		stage('Backend Test'){
+			steps{
+				sh 'node ./backend/test.js'
+			}
+		}
 	}
-	stage('Frontend Tests'){
-		sh 'node ./frontend/test.js'
-	}
+        stages{
+                stage('Backend Test'){
+                        steps{
+                                sh 'node ./frontend/test.js'
+                        }
+                }
+        }
 }
-
